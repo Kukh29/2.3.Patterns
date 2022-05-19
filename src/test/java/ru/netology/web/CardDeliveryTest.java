@@ -7,7 +7,7 @@ import ru.netology.data.DataGenerator;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.ownText;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byClassName;
 import static com.codeborne.selenide.Selenide.*;
 import static ru.netology.data.DataGenerator.getUserInfo;
@@ -35,8 +35,13 @@ public class CardDeliveryTest {
         $("[data-test-id=date] input").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=date] input").setValue(user.getDateRescheduling());
         $x("//*[text()=\"Запланировать\"]").click();
-        $(byClassName("notification__title")).should(ownText("Необходимо подтверждение"));
-        $(byClassName("notification__content")).should(ownText("У вас уже запланирована встреча на другую дату. Перепланировать?"));
+
+        $("[data-test-id='replan-notification'] > .notification__title")
+                .shouldHave(exactText("Необходимо подтверждение"));
+
+        $("[data-test-id='replan-notification'] > .notification__content")
+                .shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?"));
+
         $x("//*[text()=\"Перепланировать\"]").click();
         $(byClassName("notification__title")).should(ownText("Успешно!"));
         $(byClassName("notification__content")).should(ownText("Встреча успешно запланирована на " + user.getDateRescheduling()), Duration.ofSeconds(15));
