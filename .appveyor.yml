@@ -1,10 +1,10 @@
-image: Ubuntu
+image: Ubuntu  # образ для сборки
 
-stack: jdk 11
+stack: jdk 11  # версия JDK
 
 branches:
   only:
-    - main
+    - master
 
 build: off
 
@@ -14,4 +14,6 @@ install:
 
 build_script:
   - chmod +x gradlew
-  - ./gradlew test --info  -Dselenide.headless=true
+  - ./gradlew test --info -Dselenide.headless=true
+
+
